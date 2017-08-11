@@ -35,10 +35,15 @@ class CharInfo(object):
             self.glyph = glyphs[self.glyphid]
             self.glyph._glyph.recalcBounds(glyphs._glyphs)
 
+    def __repr__(self):
+        return 'CharInfo(0x{:x})'.format(self.code)
     def __str__(self):
-        return '0x%x|%s|%s'%(self.code, self.name, self.char)
+        return '0x{:x}|{}|{}'.format(self.code, self.name, self.char)
+    # TODO: type safety
     def __eq__(self, o):
         return self.code == o.code
+    def __ne__(self, o):
+        return self.code != o.code
     def __lt__(self, o):
         return self.code < o.code
     def __le__(self, o):
@@ -49,8 +54,6 @@ class CharInfo(object):
         return self.code >= o.code
     def __hash__(self):
         return hash(self.code)
-    def __cmp__(self, o):
-        return cmp(self.code, o.code)
 
 def query_font(fn, filterf=None):
     """

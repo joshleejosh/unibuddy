@@ -79,5 +79,5 @@ def block(c):
             imin = i + 1
         else:
             return b
-    return (0, 0, '')
+    return (0, 0, '') # pragma: no cover (this line is unreachable/untestable unless BLOCKS is broken)
 

@@ -21,12 +21,22 @@ class FontqueryText(unittest.TestCase):
         self.assertEqual(c7.category, 'So')
         self.assertEqual(c7.block, 'Yijing Hexagram Symbols')
 
+        if sys.version_info < (3, 0):
+            self.assertEqual(unicode(c7), '0x4dd7|HEXAGRAM FOR RETURN|䷗')
+        else:
+            self.assertEqual(str(c7), '0x4dd7|HEXAGRAM FOR RETURN|䷗')
+        self.assertEqual(repr(c7), 'CharInfo(0x4dd7)')
+
         # comparisons only check the unicode value, not any other attributes
         self.assertEqual(c7, c7b)
+        self.assertNotEqual(c6, c7)
         self.assertLess(c6, c7)
+        self.assertLessEqual(c6, c7)
+        self.assertLessEqual(c7, c7b)
         self.assertGreater(c7, c6)
-        a = [c7, c6, c8]
-        self.assertCountEqual(sorted(a), [c6, c7, c8])
+        self.assertGreaterEqual(c7, c6)
+        self.assertGreaterEqual(c7, c7b)
+        self.assertCountEqual(sorted([c7, c8, c6]), [c6, c7, c8])
 
     def test_read(self):
         fn = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'FSEX300.ttf'))
@@ -42,6 +52,9 @@ class FontqueryText(unittest.TestCase):
         self.assertEqual(ci.block, 'Yijing Hexagram Symbols')
         self.assertEqual(ci.glyphid, 'uni4DD7')
         self.assertIsNotNone(ci.glyph)
+
+    def test_read_fail(self):
+        self.assertRaises(OSError, unibuddy.fontquery.query_font, 'notafile.ttf')
 
     def test_filter(self):
         ffilter = lambda code: 0x4DC0 <= code <= 0x4DFF
