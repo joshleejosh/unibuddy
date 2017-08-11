@@ -7,9 +7,13 @@ from builtins import filter
 import os.path
 from itertools import chain
 from fontTools.ttLib import TTFont
-from . import ord, chr, name, category, block
+from . import chr, name, category, block
 
 class CharInfo(object):
+    """
+    Annotated, sortable character wrapper.
+    """
+    # pylint: disable=too-few-public-methods
     def __init__(self, code, glid, glyphs=None):
         self.code = code
         self.char = chr(code)
@@ -96,11 +100,11 @@ def query_font(fn, filterf=None):
 
 # ============================================================================
 
-if __name__ == '__main__':
-    import argparse
-    from collections import defaultdict
-    from . import BLOCKS, CATEGORIES
-
+def main():
+    """
+    Dump info about a given font file.
+    """
+    # pylint: disable=too-many-locals
     parser = argparse.ArgumentParser()
     parser.add_argument('fontfile', help='Path to font file to inspect.')
     args = parser.parse_args()
@@ -123,11 +127,17 @@ if __name__ == '__main__':
         cct = catcounts[catid]
         if cct > 0:
             print('\t{}: {}'.format(catdesc, cct))
-        
+
     print('Block counts:')
-    for block in BLOCKS:
-        k = block[2]
+    for b in BLOCKS:
+        k = b[2]
         bct = blockcounts[k]
         if bct > 0:
             print('\t{}: {}'.format(k, bct))
+
+if __name__ == '__main__':
+    import argparse
+    from collections import defaultdict
+    from . import BLOCKS, CATEGORIES
+    main()
 

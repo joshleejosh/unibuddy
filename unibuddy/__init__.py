@@ -5,13 +5,8 @@ Extends the standard `unicodedata` module with additional helper functions.
 from __future__ import unicode_literals
 from builtins import ord as _baseord
 from builtins import chr as _basechr
-
 import sys
-from unicodedata import (bidirectional, category, combining, decimal,
-                         decomposition, digit, east_asian_width, lookup,
-                         mirrored, name, normalize, numeric, ucd_3_2_0,
-                         unidata_version)
-
+from unicodedata import *
 from .charts import BLOCKS, CATEGORIES
 
 # ============================================================================

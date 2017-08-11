@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+"""
+Additional lookup data for unicode properties.
+"""
 from __future__ import unicode_literals
 
 # unicodedata gives you the category code for a char, but it doesn't provide
